@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Análisis de Código</title>
+    <link rel="stylesheet" href="../static/Style.css">
+</head>
+<body>
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">
+        <center>
+            <div>
+                <input class="subirArchivo" type="file" id="file" name="file" accept=".txt">
+            </div>
+            <button type="submit">Analizar Archivo</button>
+        </center>
+    </form>
+    <form method="POST" enctype="multipart/form-data">
+        <textarea name="code" placeholder="Escribe tu código aquí..." required></textarea>
+        <button type="submit">Analizar código</button>
+        <div class="result">
+            <div>
+                {% for token in tokens %}
+                    <p>{{ token.type }}</p>
+                {% endfor %}
+            </div>
+            <div>
+                {% for token in tokens %}
+                    {% if token.type == 'ParentesisIzq' or token.type == 'ParentesisDer' %}
+                        <p>Linea {{ token.line }} <br> {{ token.description }}</p>
+                    {% else %}
+                        <p>Linea {{ token.line }} <br> {{ token.description }} : {{ token.value }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</body>
+</html>
